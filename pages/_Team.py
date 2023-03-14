@@ -1,16 +1,10 @@
 import streamlit as st
-import base64    #pip install pybase64
-import streamlit.components.v1 as components
 from PIL import Image
-from functions import add_bg_from_local
-import os
+import base64
+import streamlit as st
+# from functions import add_bg_from_local
 
-st.set_page_config(
-    page_title="Yogi",
-    page_icon="🧘‍♂️",
-)
-
-
+# add_bg_from_local('images/art4 (1).jpg')
 
 page_bg_img =  """
     <style>
@@ -33,7 +27,8 @@ page_bg_img =  """
         background: url("https://s32625.pcdn.co/wp-content/uploads/2020/08/Spring-Mist-oil-on-linen-20x24-Albert-Handell_WO-1536x1163.jpg.webp");
         background-size: cover;
         background-position: top left;
-        background-repeat: no-repeat
+        background-repeat: no-repeat;
+
 
     }
     [data-testid="stHeader"] {
@@ -46,63 +41,58 @@ page_bg_img =  """
         right: 2rem
     }
 
-    [class="css-1wivap2 e16fv1kl3"] {
+    [data-testid="stMetricValue"] {
         background-color: #E6F3FB;
         border: 2px solid #c5d1f6;
-        padding: 3%;
+        padding: 2%;
         box-shadow: 3px 3px #afdcf1;
         border-radius: 4px;
         opacity: 0.8;
-        text-align: center;
-            }
+        text-align: center
+        }
 
     [data-testid="stImage"] {
-        margin: auto;
-        width: auto;
-        text-align: center;
-        margin: auto;
-        display: block;
-        position: relative;
-        left: 0%;
         border:5px;
         padding:10px;
         border-radius: 15px;
         background:#E6F3FB;
         box-shadow: 3px 3px #afdcf1;
         border-radius: 4px;
-        opacity: 0.9;
-        margin: 5%
-        }
+            }
+
+
+    [data-testid="stText"] {
+        background-color: #E6F3FB;
+        border: 2px solid #afdcf1;
+        padding: 2%;
+        border-radius: 2px;
+        box-shadow: 3px 3px #afdcf1;
+        border-radius: 4px;
+        opacity: 0.9
+            }
+
 
 
     </style>
 """
 
-st.sidebar.success("Select a page above.")
-
-
-
 st.markdown(page_bg_img, unsafe_allow_html=True)
 
-
-st.metric(label="", value="Yoga Pose Detection")
-
-slide_1 = Image.open(f'slides/Slide1.JPG')
-slide_2 = Image.open(f'slides/Slide2.JPG')
-slide_3 = Image.open(f'slides/Slide3.JPG')
-slide_4 = Image.open(f'slides/Slide4.JPG')
-slide_5 = Image.open(f'slides/Slide5.JPG')
-slide_6 = Image.open(f'slides/Slide6.JPG')
-slide_7 = Image.open(f'slides/Slide7.JPG')
-
-st.image(image=slide_1)
-st.image(image=slide_2)
-st.image(image=slide_3)
-st.image(image=slide_4)
-st.image(image=slide_5)
-st.image(image=slide_6)
-st.image(image=slide_7)
+photo = """
+            <style type="text/css">
+            div[data-testid="stHorizontalBlock"] {
+                border:20px;
+                padding:40px;
+                border-radius: 10px;
+                background:#FFFFFF;
+            } <img src="images/team_yogi.jpg">
+            </style>
+        """
 
 
+st.metric(label="", value="Meet the Team")
 
-# st.image(image=image, caption="Team YOGi")
+image = Image.open('images/team_yogi.jpg')
+st.image(image, caption='Team Yogi')
+
+st.text("Dolly, Ted, Victoria and Melvin")

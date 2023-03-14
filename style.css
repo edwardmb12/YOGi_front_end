@@ -1,4 +1,4 @@
-.highlight {
+/* .highlight {
   border-radius: 0.4rem;
   color: white;
   padding: 0.5rem;
@@ -13,4 +13,11 @@
 }
 .red {
   background-color: lightcoral;
+} */
+
+div.css-1r6slb0.e1tzin5v2 {
+  background-color: #E6F3FB;
+  border: 2px solid #afdcf1;
+  padding: 5% 5%;
+  border-radius: 5px;
 }

@@ -1,17 +1,6 @@
 import streamlit as st
-import base64    #pip install pybase64
-import streamlit.components.v1 as components
+import base64
 from PIL import Image
-from functions import add_bg_from_local
-import os
-
-st.set_page_config(
-    page_title="Yogi",
-    page_icon="🧘‍♂️",
-)
-
-
-
 page_bg_img =  """
     <style>
 
@@ -33,7 +22,8 @@ page_bg_img =  """
         background: url("https://s32625.pcdn.co/wp-content/uploads/2020/08/Spring-Mist-oil-on-linen-20x24-Albert-Handell_WO-1536x1163.jpg.webp");
         background-size: cover;
         background-position: top left;
-        background-repeat: no-repeat
+        background-repeat: no-repeat;
+
 
     }
     [data-testid="stHeader"] {
@@ -46,63 +36,69 @@ page_bg_img =  """
         right: 2rem
     }
 
-    [class="css-1wivap2 e16fv1kl3"] {
+    [data-testid="stMetricValue"] {
         background-color: #E6F3FB;
         border: 2px solid #c5d1f6;
-        padding: 3%;
+        padding: 2%;
         box-shadow: 3px 3px #afdcf1;
         border-radius: 4px;
         opacity: 0.8;
-        text-align: center;
-            }
+        text-align: center
+    }
+
+    [data-testid="css-bibxuw effi0qh3"] {
+        background-color: #E6F3FB;
+        border: 2px solid #c5d1f6;
+        padding: 1%;
+        box-shadow: 3px 3px #afdcf1;
+        border-radius: 4px;
+        opacity: 0.8
+    }
 
     [data-testid="stImage"] {
-        margin: auto;
-        width: auto;
-        text-align: center;
-        margin: auto;
-        display: block;
-        position: relative;
-        left: 0%;
         border:5px;
         padding:10px;
         border-radius: 15px;
         background:#E6F3FB;
         box-shadow: 3px 3px #afdcf1;
         border-radius: 4px;
-        opacity: 0.9;
-        margin: 5%
-        }
+        width="600"
+        height="337";
+        width: 500px;
+        text-align: center;
+        margin: auto;
+        width: 100%;
+        margin: 3%
+            }
 
+
+    [class="css-bibxuw effi0qh3"] {
+        border:1px;
+        padding:2px;
+        border-radius: 1px;
+        background:#E6F3FB;
+        box-shadow: 3px 3px #afdcf1;
+        border-radius: 4px;
+        opacity: 0.8
+            }
 
     </style>
+
 """
-
-st.sidebar.success("Select a page above.")
-
 
 
 st.markdown(page_bg_img, unsafe_allow_html=True)
 
+st.metric(label="", value="Positions")
 
-st.metric(label="", value="Yoga Pose Detection")
+pose = st.text_input("What pose would you like to see?", value="Downward Dog")
 
-slide_1 = Image.open(f'slides/Slide1.JPG')
-slide_2 = Image.open(f'slides/Slide2.JPG')
-slide_3 = Image.open(f'slides/Slide3.JPG')
-slide_4 = Image.open(f'slides/Slide4.JPG')
-slide_5 = Image.open(f'slides/Slide5.JPG')
-slide_6 = Image.open(f'slides/Slide6.JPG')
-slide_7 = Image.open(f'slides/Slide7.JPG')
+# col1, col2 = st.columns(2)
 
-st.image(image=slide_1)
-st.image(image=slide_2)
-st.image(image=slide_3)
-st.image(image=slide_4)
-st.image(image=slide_5)
-st.image(image=slide_6)
-st.image(image=slide_7)
+# image1 = Image.open(f'YOGI_Ground_Truths_new/poses/{pose}.jpeg')
+# image2 = Image.open(f'YOGI_Ground_Truths_new/poses_defined/{pose}.jpeg')
+# col1.image(image1, caption=pose)
+# col2.image(image2, caption=pose)
 
-
-
-# st.image(image=image, caption="Team YOGi")
+image = Image.open(f'YOGI_Ground_Truths_new/poses/{pose}.jpeg')
+st.image(image=image, caption=pose)
