@@ -11,9 +11,12 @@ st.set_page_config(
 )
 
 
-
 page_bg_img =  """
     <style>
+    [data-testid="stMetricLabel"] {
+        opacity:0;
+        margin: -30px;
+    }
 
     [data-testid="stSidebarNav"] {
         background-size: cover;
@@ -80,10 +83,7 @@ page_bg_img =  """
 
 st.sidebar.success("Select a page above.")
 
-
-
 st.markdown(page_bg_img, unsafe_allow_html=True)
-
 
 st.metric(label="", value="Yoga Pose Detection")
 
@@ -102,7 +102,5 @@ st.image(image=slide_4)
 st.image(image=slide_5)
 st.image(image=slide_6)
 st.image(image=slide_7)
-
-
 
 # st.image(image=image, caption="Team YOGi")
