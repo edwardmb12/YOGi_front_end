@@ -6,10 +6,14 @@ import mediapipe as mp
 from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
 from streamlit_webrtc import (
 VideoTransformerBase,
+VideoProcessorBase,
 webrtc_streamer,
 VideoHTMLAttributes)
 from video import extract_and_plot
 import threading
+import matplotlib.pyplot as plt
+from yogi import preprocessor, load_predict, params
+from PIL import Image
 #need to import position detection and feed in an image
 
 
@@ -70,45 +74,11 @@ MuiBox-root css-0
 st.metric(label="", value="Video Capture")
 st.markdown(page_bg_img, unsafe_allow_html=True)
 
-# def main():
-#     class VideoTransformer(VideoTransformerBase):
-#         frame_lock: threading.Lock  # `transform()` is running in another thread, then a lock object is used here for thread-safety.
-
-#         out_image: Union[np.ndarray, None]
-
-#         def __init__(self) -> None:
-#             self.frame_lock = threading.Lock()
-
-#             self.out_image = None
-
-#         def transform(self, frame: av.VideoFrame) -> np.ndarray:
-#             out_image = frame.to_ndarray(format="bgr24")
-
-#             with self.frame_lock:
-
-#                 self.out_image = out_image
-#             return out_image
-
-#     ctx = webrtc_streamer(key="snapshot", video_transformer_factory=VideoTransformer)
-
-#     if ctx.video_transformer:
-
-#         snap = st.button("Snapshot")
-#         if snap:
-#             with ctx.video_transformer.frame_lock:
-#                 image = ctx.video_transformer.out_image
-
-#         else:
-#             st.warning("No frames available yet.")
-
-
-
 
 
 #Defining the variables
 lock = threading.Lock()
 img_container = {"frames":[]}
-
 
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
@@ -118,6 +88,52 @@ points = mpPose.PoseLandmark#(
     #model_complexity=0,
     #min_detection_confidence=0.5,
     #min_tracking_confidence=0.5)
+
+
+
+
+class VideoProcessor(VideoProcessorBase):
+    def __init__(self):
+        self.style = 'color'
+
+    def video_frame_callback(self):
+        img = self.to_ndarray(format="bgr24")
+        with lock:
+            if img is not None:
+                img_container["frames"].append(img)
+
+
+
+
+def main():
+    playing = st.checkbox("Start/Stop", value=False)
+
+    if playing:
+        st.session_state["photo_frames"]=[]
+        webrtc_streamer(
+            key="object-detection",
+            video_frame_callback=VideoProcessor.video_frame_callback,
+            media_stream_constraints={
+                "video": True
+            },
+            desired_playing_state=playing #link to Start/Stop button
+            ,  rtc_configuration={"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]
+                            }
+        )
+
+    #Storing photo frames
+    if 'photo_frames' not in st.session_state:
+        st.session_state['photo_frames'] = img_container["frames"]
+    else:
+        if len(st.session_state['photo_frames']) < 1:
+            st.session_state['photo_frames'] = img_container["frames"]
+
+    if not playing:
+        #Extracting the frames
+        full_frames=st.session_state["photo_frames"]
+
+
+#full frames is a list of 
 
 
 
@@ -141,32 +157,8 @@ RTC_CONFIGURATION = RTCConfiguration(
 
 
 
-class VideoProcessor():
-    def recv(self, frame):
-        img = frame.to_ndarray(format="bgr24")
-        img = process(img)
-        return av.VideoFrame.from_ndarray(img, format="bgr24")
-webrtc_ctx = webrtc_streamer(
-    key="WYH",
-    mode=WebRtcMode.SENDRECV,
-    rtc_configuration=RTC_CONFIGURATION,
-    media_stream_constraints={"video": True, "audio": False},
-    video_processor_factory=VideoProcessor,
-    async_processing=True)
-
-if webrtc_ctx.video_transformer:
-    snap = st.button("Snapshot")
-    if snap:
-        image = webrtc_ctx.video_transformer.out_image
-        st.image(image=image)
-
-    else:
-        st.warning("No frames available yet.")
 
 
 
-
-
-
-
-# if __name__ == "__main__":
+if __name__ == "__main__":
+    main()
