@@ -22,29 +22,29 @@ page_bg_img =  """
         background-size: cover;
         background-position: top left;
         background-repeat: no-repeat;
-
     }
+    
     [data-testid="stSidebar"] {
         background-size: cover;
         background-position: top left;
         background-repeat: no-repeat;
         opacity: 0.85
-
     }
+
     [data-testid="stAppViewContainer"] {
         background-position:center;
         background: url("https://s32625.pcdn.co/wp-content/uploads/2020/08/Spring-Mist-oil-on-linen-20x24-Albert-Handell_WO-1536x1163.jpg.webp");
         background-size: cover;
         background-position: top left;
         background-repeat: no-repeat
-
     }
+
     [data-testid="stHeader"] {
         background-colour:rgba(0,0,0,0);
         colour: white;
         opacity: 0.1
-
     }
+
     [data-testid="stToolbar"] {
         right: 2rem
     }
@@ -57,7 +57,7 @@ page_bg_img =  """
         border-radius: 4px;
         opacity: 0.8;
         text-align: center;
-            }
+    }
 
     [data-testid="stImage"] {
         margin: auto;
@@ -75,8 +75,7 @@ page_bg_img =  """
         border-radius: 4px;
         opacity: 0.9;
         margin: 5%
-        }
-
+    }
 
     </style>
 """
