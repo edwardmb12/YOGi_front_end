@@ -59,7 +59,6 @@ page_bg_img =  """
         border-radius: 4px;
     }
 
-
     [data-testid="stText"] {
         background-color: #E6F3FB;
         border: 2px solid #afdcf1;

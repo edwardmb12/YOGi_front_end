@@ -70,7 +70,6 @@ page_bg_img =  """
         margin: 3%
     }
 
-
     [class="css-bibxuw effi0qh3"] {
         border:1px;
         padding:2px;
